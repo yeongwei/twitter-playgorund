@@ -23,9 +23,9 @@ public class Twitter {
 			+ "/oauth2/token";
 	private final static String INVALID_TOKEN_URL = "https://" + API_HOST
 			+ "/oauth2/invalidate_token";
-	private final static String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json?q=";
+	private final static String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json?lang=en&count=10&result_type=popular&q=";
 	private final static String AUTH_BODY = "grant_type=client_credentials";
-	private final static String UTF_8 = "UTF-8";
+	protected final static String UTF_8 = "UTF-8";
 	private final static String ACCESS_TOKEN = "access_token";
 	private final static Logger LOGGER = Logger.getLogger(Twitter.class
 			.getName());
@@ -55,7 +55,7 @@ public class Twitter {
 		return connection;
 	}
 
-	private HttpsURLConnection makeGetConnection(String bearerToken,
+	protected HttpsURLConnection makeGetConnection(String bearerToken,
 			String urlString) throws Exception {
 		URL url = new URL(urlString);
 		HttpsURLConnection connection = (HttpsURLConnection) url
@@ -81,7 +81,7 @@ public class Twitter {
 		}
 	}
 
-	private String read(HttpsURLConnection connection) throws Exception {
+	protected String read(HttpsURLConnection connection) throws Exception {
 		InputStream in;
 		try {
 			in = connection.getInputStream();
