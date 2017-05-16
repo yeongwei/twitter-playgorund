@@ -1,0 +1,1 @@
+{"name":"Bristol","placeType":{"code":7,"name":"Town"},"url":"http:\/\/where.yahooapis.com\/v1\/place\/13963","parentid":23424975,"country":"United Kingdom","woeid":13963,"countryCode":"GB"}
