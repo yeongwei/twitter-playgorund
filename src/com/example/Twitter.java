@@ -22,15 +22,15 @@ public class Twitter {
 	private final static String TOKEN_URL = "https://" + API_HOST
 			+ "/oauth2/token";
 	private final static String INVALID_TOKEN_URL = "https://" + API_HOST
-			+ "/oauth2/invalidate_token";
-	private final static String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json?lang=en&count=10&result_type=popular&q=";
+			+ "/oauth2/invalidate_token";	
 	private final static String AUTH_BODY = "grant_type=client_credentials";
-	protected final static String UTF_8 = "UTF-8";
 	private final static String ACCESS_TOKEN = "access_token";
 	private final static Logger LOGGER = Logger.getLogger(Twitter.class
 			.getName());
 	private ObjectMapper mapper = new ObjectMapper();
 
+	protected final static String UTF_8 = "UTF-8";
+	
 	private String getEncodedCredentials() throws Exception {
 		String encodedConsumerKey = URLEncoder.encode(CONSUMER_KEY, UTF_8);
 		String encodedConsumerSecret = URLEncoder
@@ -125,24 +125,5 @@ public class Twitter {
 			return true;
 		else
 			return false;
-	}
-
-	protected String search(String bearerToken, String searchPhrase)
-			throws Exception {
-		String fullUrl = SEARCH_URL + URLEncoder.encode(searchPhrase, UTF_8);
-		HttpsURLConnection connection = makeGetConnection(bearerToken, fullUrl);
-		connection.connect();
-		String response = read(connection);
-		return response;
-	}
-
-	public static void main(String[] args) throws Exception {
-		Twitter twitter = new Twitter();
-		String bearerToken = twitter.getBearerToken();
-		LOGGER.info(bearerToken);
-		String searchResponse = twitter.search(bearerToken, "malaysia");
-		LOGGER.info(searchResponse);
-		Boolean status = twitter.invalidateBearerToken(bearerToken);
-		LOGGER.info(String.valueOf(status));
 	}
 }

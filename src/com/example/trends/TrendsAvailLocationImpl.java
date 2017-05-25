@@ -1,4 +1,4 @@
-package com.example;
+package com.example.trends;
 
 import java.util.Comparator;
 import java.util.List;
@@ -6,17 +6,22 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.example.Twitter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class TwitterTrends extends Twitter {
+/*
+ * Evaluation for https://dev.twitter.com/rest/reference/get/trends/available
+ * Returns the locations that Twitter has trending topic information for.
+ */
+public class TrendsAvailLocationImpl extends Twitter {
 	private final static String TRENDS_LOC_URL = "https://api.twitter.com/1.1/trends/available.json";
-	private final static Logger LOGGER = Logger.getLogger(TwitterTrends.class
+	private final static Logger LOGGER = Logger.getLogger(TrendsAvailLocationImpl.class
 			.getName());
 	
 	public static void main(String[] args) throws Exception {
 		LOGGER.info("Programme has started (" + getMemoryReading() + ")");
-		TwitterTrends twitterTrends = new TwitterTrends();
+		TrendsAvailLocationImpl twitterTrends = new TrendsAvailLocationImpl();
 		String bearerToken = twitterTrends.getBearerToken();
 		LOGGER.info("Got Bearer Token: " + bearerToken);
 		HttpsURLConnection connection = twitterTrends.makeGetConnection(
@@ -26,17 +31,17 @@ public class TwitterTrends extends Twitter {
 		String response = twitterTrends.read(connection);
 		LOGGER.info("Got response (" + getMemoryReading() + ")");
 		
-		TypeReference<List<TrendingLocation>> ListOfTrendingLocation = new TypeReference<List<TrendingLocation>>(){};
+		TypeReference<List<TrendsAvailLocation>> ListOfTrendingLocation = new TypeReference<List<TrendsAvailLocation>>(){};
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		LOGGER.info("About to parse Json to Pojo (" + getMemoryReading() + ")");
-		List<TrendingLocation> listOfTrendingLocation = objectMapper.readValue(response, ListOfTrendingLocation);
+		List<TrendsAvailLocation> listOfTrendingLocation = objectMapper.readValue(response, ListOfTrendingLocation);
 		LOGGER.info("Finished parsing Json to Pojo (" + getMemoryReading() + ")");
 		
 		listOfTrendingLocation = listOfTrendingLocation.subList(1, listOfTrendingLocation.size()); // Remove Worldwide
-		listOfTrendingLocation.sort(new Comparator<TrendingLocation>() {
+		listOfTrendingLocation.sort(new Comparator<TrendsAvailLocation>() {
 			@Override
-			public int compare(TrendingLocation o1, TrendingLocation o2) {
+			public int compare(TrendsAvailLocation o1, TrendsAvailLocation o2) {
 				return o1.getCountry().compareTo(o2.getCountry());
 			}
 			

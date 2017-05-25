@@ -1,4 +1,4 @@
-package com.example;
+package com.example.trends;
 
 class PlaceType {
 	private String code;
@@ -21,7 +21,7 @@ class PlaceType {
 	}
 }
 
-public class TrendingLocation {
+public class TrendsAvailLocation {
 	private String name;
 	private PlaceType placeType;
 	private String url;
